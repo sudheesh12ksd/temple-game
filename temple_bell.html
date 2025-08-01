@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Temple Bell</title>
+  <style>
+    body {
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .bell-img {
+      width: 120px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .bell-img:active {
+      transform: scale(0.95);
+    }
+    h2 {
+      font-family: sans-serif;
+      margin-bottom: 20px;
+      color: #fffbe6;
+      text-shadow: 2px 2px 8px #6b4f1d;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tap the Temple Bell</h2>
+  <div class="grid" id="bellGrid"></div>
+
+  <audio id="bellSound"></audio>
+  <script>
+    // Sound files for each row
+    const bellSounds = [
+      "bell4.mp3", // Row 1
+      "bell2.mp3", // Row 2
+      "bell3.mp3", // Row 3
+      "bell4.mp3", // Row 4
+      "bell.mp3",  // Row 5
+      "bell3.mp3"  // Row 6
+    ];
+
+    const grid = document.getElementById("bellGrid");
+    const bellAudio = document.getElementById("bellSound");
+
+    for (let row = 0; row < 6; row++) {
+      // Pick a random column for the sound bell
+      const soundBellCol = Math.floor(Math.random() * 6);
+      for (let col = 0; col < 6; col++) {
+        const img = document.createElement("img");
+        img.src = "bell.jpeg";
+        img.alt = "Temple Bell";
+        img.className = "bell-img";
+        if (col === soundBellCol) {
+          img.onclick = () => ringBell(bellSounds[row]);
+        }
+        grid.appendChild(img);
+      }
+    }
+
+    function ringBell(soundFile) {
+      bellAudio.src = soundFile;
+      bellAudio.currentTime = 0;
+      bellAudio.play();
+    }
+  </script>
+</body>
+</html>
